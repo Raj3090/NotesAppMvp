@@ -1,5 +1,7 @@
 package com.example.notesappmvp.ui.addeditnotes
 
+import com.example.notesappmvp.data.local.db.entity.Note
+
 interface AddEditNotesContract {
 
     interface View {
@@ -7,7 +9,7 @@ interface AddEditNotesContract {
     }
 
     interface Presenter{
-        fun addNote()
+        fun addNote(note: Note)
         fun editNote()
     }
 

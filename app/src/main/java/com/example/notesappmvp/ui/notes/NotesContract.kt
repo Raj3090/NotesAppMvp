@@ -7,11 +7,12 @@ interface NotesContract{
     interface View {
         fun showNotes(tasks:List<Note> )
         fun updateNotesList()
+        fun showAddNote()
     }
 
     interface Presenter{
         fun loadNotes()
-        fun addNote()
+        fun addNewNote()
         fun editNote(id: Long)
     }
 }

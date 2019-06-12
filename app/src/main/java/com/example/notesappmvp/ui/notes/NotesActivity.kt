@@ -1,5 +1,6 @@
 package com.example.notesappmvp.ui.notes
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,8 @@ import com.example.notesappmvp.data.local.db.NotesLocalDataSource
 import com.example.notesappmvp.data.local.db.entity.Note
 import com.example.notesappmvp.data.remote.NotesRemoteDataSource
 import com.example.notesappmvp.data.repository.NotesRepository
+import com.example.notesappmvp.ui.addeditnotes.AddEditNoteActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class NotesActivity : AppCompatActivity(),NotesContract.View {
 
@@ -23,19 +26,18 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
         setContentView(R.layout.activity_notes)
         recyclerView = findViewById<RecyclerView>(R.id.taskList)
 
-        var notesDataBase:NotesDataBase= NotesDataBase.get(this)
-
+        //use injection
+        val notesDataBase:NotesDataBase= NotesDataBase.get(this)
         val appExecutors:AppExecutors=AppExecutors()
-
-        var notesLocalDataSource:NotesLocalDataSource=NotesLocalDataSource(notesDataBase,appExecutors)
-
-        var notesRemoteDataSource:NotesRemoteDataSource= NotesRemoteDataSource()
-
-        var notesRepository:NotesRepository= NotesRepository.getInstance(notesRemoteDataSource,notesLocalDataSource)
-
+        val notesLocalDataSource:NotesLocalDataSource=NotesLocalDataSource(notesDataBase,appExecutors)
+        val notesRemoteDataSource:NotesRemoteDataSource= NotesRemoteDataSource()
+        val notesRepository:NotesRepository= NotesRepository.getInstance(notesRemoteDataSource,notesLocalDataSource)
         presenter=NotesPresenter(notesRepository,this)
-
         presenter.loadNotes()
+
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
+              presenter.addNewNote()
+        }
     }
 
 
@@ -48,6 +50,11 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
         recyclerView.layoutManager=layoutManager
         recyclerView.adapter=NotesAdapter(notes)
 
+    }
+
+    override fun showAddNote() {
+        val intent=Intent(this,AddEditNoteActivity::class.java)
+        startActivity(intent)
     }
 
 

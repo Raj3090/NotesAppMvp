@@ -10,8 +10,8 @@ class NotesPresenter(val notesRepository: NotesRepository,val view: NotesContrac
         view.showNotes(notesRepository.getNotes())
     }
 
-    override fun addNote() {
-
+    override fun addNewNote() {
+        view.showAddNote()
     }
 
     override fun editNote(id: Long) {
