@@ -5,6 +5,7 @@ import com.example.notesappmvp.data.repository.NotesRepository
 class NotesPresenter(val notesRepository: NotesRepository,val view: NotesContract.View):NotesContract.Presenter{
 
 
+
     override fun loadNotes() {
         // loads notes from repo,so we need reference
         view.showNotes(notesRepository.getNotes())
@@ -18,5 +19,8 @@ class NotesPresenter(val notesRepository: NotesRepository,val view: NotesContrac
 
     }
 
+    override fun onResult(requestCode: Int, resultCode: Int) {
+
+    }
 
 }

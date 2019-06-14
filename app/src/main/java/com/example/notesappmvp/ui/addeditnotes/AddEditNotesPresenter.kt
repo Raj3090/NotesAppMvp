@@ -8,6 +8,8 @@ class AddEditNotesPresenter(val notesRepository: NotesRepository,val view: AddEd
 
     override fun addNote(note: Note) {
         notesRepository.addNote(note)
+        view.refreshNoteList()
+
     }
 
     override fun editNote() {

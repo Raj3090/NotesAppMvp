@@ -14,5 +14,6 @@ interface NotesContract{
         fun loadNotes()
         fun addNewNote()
         fun editNote(id: Long)
+        fun onResult(requestCode:Int,resultCode:Int)
     }
 }

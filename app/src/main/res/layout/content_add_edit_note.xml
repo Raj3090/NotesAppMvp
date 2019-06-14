@@ -10,7 +10,7 @@
         tools:context=".ui.addeditnotes.AddEditNoteActivity">
 
     <EditText
-            android:id="@+id/add_task_title"
+            android:id="@+id/addTaskTitleTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/title_hint"
@@ -21,13 +21,13 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
     <EditText
-            android:id="@+id/add_task_description"
+            android:id="@+id/addTaskDescriptionTv"
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:gravity="top"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_task_title"
+            app:layout_constraintTop_toBottomOf="@id/addTaskTitleTv"
             android:hint="@string/description_hint" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

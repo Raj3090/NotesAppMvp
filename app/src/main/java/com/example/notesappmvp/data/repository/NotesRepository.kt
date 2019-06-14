@@ -19,13 +19,13 @@ class NotesRepository private constructor(notesRemoteDataSource: NotesDataSource
     override fun getNotes():List<Note> {
 
         if(mCachedTasks!=null&&!mCacheIsDirty){
-            return   ArrayList<Note>(mCachedTasks?.values)
+            return   ArrayList(mCachedTasks!!.values)
         }
 
         if(mCacheIsDirty){
             return mNotesRemoteDataSource.getNotes()
         }else{
-            return mNotesRemoteDataSource.getNotes()
+            return mNotesLocalDataSource.getNotes()
         }
 
     }

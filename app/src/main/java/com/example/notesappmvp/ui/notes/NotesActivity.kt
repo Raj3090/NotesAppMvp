@@ -54,7 +54,11 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
 
     override fun showAddNote() {
         val intent=Intent(this,AddEditNoteActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent,AddEditNoteActivity.REQUEST_ADD_TASK)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        presenter.onResult(requestCode,resultCode)
     }
 
 

@@ -5,7 +5,7 @@ import com.example.notesappmvp.data.local.db.entity.Note
 interface AddEditNotesContract {
 
     interface View {
-       fun refreshAdapter()
+       fun refreshNoteList()
     }
 
     interface Presenter{

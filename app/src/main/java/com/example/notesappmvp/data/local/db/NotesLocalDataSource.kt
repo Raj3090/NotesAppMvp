@@ -9,7 +9,9 @@ class NotesLocalDataSource(private val dataBase: NotesDataBase,
 
 
     override fun addNote(note: Note) {
-        val saveRunnable = Runnable {  dataBase.notesDao().insertNote(note) }
+        val saveRunnable = Runnable {
+            dataBase.notesDao().insertNote(note)
+        }
         appExecutors.diskIO().execute(saveRunnable)
     }
 
