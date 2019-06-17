@@ -2,7 +2,6 @@ package com.example.notesappmvp.data.repository
 
 import com.example.notesappmvp.data.NotesDataSource
 import com.example.notesappmvp.data.local.db.entity.Note
-import java.util.LinkedHashMap
 
 class NotesRepository private constructor(notesRemoteDataSource: NotesDataSource,
                                           notesLocalDataSource: NotesDataSource):NotesDataSource{
@@ -16,17 +15,43 @@ class NotesRepository private constructor(notesRemoteDataSource: NotesDataSource
         mNotesLocalDataSource = checkNotNull(notesLocalDataSource)
     }
 
-    override fun getNotes():List<Note> {
+    override fun getNotes(noteCallBack: NotesDataSource.LoadTasksCallback) {
 
         if(mCachedTasks!=null&&!mCacheIsDirty){
-            return   ArrayList(mCachedTasks!!.values)
+            noteCallBack.onTasksLoaded(ArrayList(mCachedTasks!!.values))
         }
 
         if(mCacheIsDirty){
-            return mNotesRemoteDataSource.getNotes()
+            getNoteFromRemoteSource(noteCallBack)
         }else{
-            return mNotesLocalDataSource.getNotes()
+
+            return mNotesLocalDataSource.getNotes(object : NotesDataSource.LoadTasksCallback{
+
+                override fun onTasksLoaded(notes: List<Note>) {
+                    noteCallBack.onTasksLoaded(notes)
+                }
+
+                override fun onDataNotAvailable() {
+                    getNoteFromRemoteSource(noteCallBack)
+                }
+
+            })
         }
+
+    }
+
+    private fun getNoteFromRemoteSource(noteCallBack: NotesDataSource.LoadTasksCallback) {
+        mNotesRemoteDataSource.getNotes(object :NotesDataSource.LoadTasksCallback {
+
+            override fun onTasksLoaded(notes: List<Note>) {
+                noteCallBack.onTasksLoaded(notes)
+            }
+
+            override fun onDataNotAvailable() {
+
+            }
+
+        })
 
     }
 

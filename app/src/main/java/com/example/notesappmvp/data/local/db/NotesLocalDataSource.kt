@@ -15,9 +15,13 @@ class NotesLocalDataSource(private val dataBase: NotesDataBase,
         appExecutors.diskIO().execute(saveRunnable)
     }
 
-    override fun getNotes(): List<Note> {
-        val arrayList = ArrayList<Note>()//Creating an empty arraylist
-        return arrayList
+    override fun getNotes(noteCallBack: NotesDataSource.LoadTasksCallback) {
+
+        val getRunnable = Runnable {
+            noteCallBack.onTasksLoaded(dataBase.notesDao().getNotes())
+        }
+        appExecutors.diskIO().execute(getRunnable)
+
     }
 
 }

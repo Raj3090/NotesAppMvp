@@ -35,7 +35,7 @@ class AddEditNoteActivity : AppCompatActivity(),AddEditNotesContract.View {
         presenter= AddEditNotesPresenter(notesRepository,this)
 
         fab.setOnClickListener { view ->
-            //call presenter method ,but before that init
+            //call mPresenter method ,but before that init
             presenter.addNote(Note(addTaskTitleTv.text.toString(),addTaskDescriptionTv.text.toString()))
         }
     }
@@ -47,7 +47,7 @@ class AddEditNoteActivity : AppCompatActivity(),AddEditNotesContract.View {
     }
 
     companion object{
-        val REQUEST_ADD_TASK = 1
+        val REQUEST_ADD_TASK = 100
     }
 
 }

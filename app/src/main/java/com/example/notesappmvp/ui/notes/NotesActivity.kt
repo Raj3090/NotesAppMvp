@@ -17,8 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class NotesActivity : AppCompatActivity(),NotesContract.View {
 
-    //create presenter
-    lateinit var presenter:NotesContract.Presenter
+    //create mPresenter
+    lateinit var mPresenter:NotesContract.Presenter
     lateinit var recyclerView:RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,11 +32,11 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
         val notesLocalDataSource:NotesLocalDataSource=NotesLocalDataSource(notesDataBase,appExecutors)
         val notesRemoteDataSource:NotesRemoteDataSource= NotesRemoteDataSource()
         val notesRepository:NotesRepository= NotesRepository.getInstance(notesRemoteDataSource,notesLocalDataSource)
-        presenter=NotesPresenter(notesRepository,this)
-        presenter.loadNotes()
+        mPresenter=NotesPresenter(notesRepository,this)
+        mPresenter.loadNotes()
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
-              presenter.addNewNote()
+              mPresenter.addNewNote()
         }
     }
 
@@ -48,8 +48,7 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
     override fun showNotes(notes: List<Note>) {
         val layoutManager:LinearLayoutManager=LinearLayoutManager(this)
         recyclerView.layoutManager=layoutManager
-        recyclerView.adapter=NotesAdapter(notes)
-
+        recyclerView.adapter=NotesAdapter(notes,mItemListener)
     }
 
     override fun showAddNote() {
@@ -58,10 +57,27 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        presenter.onResult(requestCode,resultCode)
+        mPresenter.onResult(requestCode,resultCode)
     }
 
 
+    /**
+     * Listener for clicks on tasks in the ListView.
+     */
+    internal var mItemListener: NotesAdapter.NoteItemListener = object : NotesAdapter.NoteItemListener {
+
+        override fun onNoteClick(clickedNote: Note) {
+            mPresenter.openNoteDetails(clickedNote)
+        }
+
+        override fun onCompleteNoteClick(completedNote: Note) {
+            mPresenter.completeNote(completedNote)
+        }
+
+        override fun onActivateNoteClick(activatedNote: Note) {
+            mPresenter.activateNote(activatedNote)
+        }
+    }
 
 
 }

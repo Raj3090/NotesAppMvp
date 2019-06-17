@@ -9,11 +9,8 @@ class NotesRemoteDataSource:NotesDataSource {
 
     }
 
-    override fun getNotes() :List<Note>{
-        val arrayList = ArrayList<Note>()//Creating an empty arraylist
-        arrayList.add(Note("first Note","THis is my first Note"))//Adding object in arraylist
-        arrayList.add(Note("Second Note","THis is my Second Note"))//Adding object in arraylist
-        return arrayList
+    override fun getNotes(noteCallBack: NotesDataSource.LoadTasksCallback) {
+
     }
 
 }
