@@ -56,6 +56,7 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
         startActivityForResult(intent,AddEditNoteActivity.REQUEST_ADD_TASK)
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         mPresenter.onResult(requestCode,resultCode)
     }

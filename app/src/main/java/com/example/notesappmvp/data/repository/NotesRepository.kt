@@ -3,7 +3,7 @@ package com.example.notesappmvp.data.repository
 import com.example.notesappmvp.data.NotesDataSource
 import com.example.notesappmvp.data.local.db.entity.Note
 
-class NotesRepository private constructor(notesRemoteDataSource: NotesDataSource,
+public class NotesRepository private constructor(notesRemoteDataSource: NotesDataSource,
                                           notesLocalDataSource: NotesDataSource):NotesDataSource{
 
 
