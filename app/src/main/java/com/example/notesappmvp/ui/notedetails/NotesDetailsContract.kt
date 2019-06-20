@@ -1,16 +1,20 @@
 package com.example.notesappmvp.ui.notedetails
 
+import android.accounts.AuthenticatorDescription
 import com.example.notesappmvp.data.local.db.entity.Note
 
 interface NotesDetailsContract {
 
     interface View {
-       fun refreshNoteList()
+
+        fun showDescription(description: String)
+        fun showTitle(title: String)
+        fun showEditNoteUi(id: String)
     }
 
     interface Presenter{
-        fun addNote(note: Note)
         fun editNote()
+        fun start()
     }
 
 }

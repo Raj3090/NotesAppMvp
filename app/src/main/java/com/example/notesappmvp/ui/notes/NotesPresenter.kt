@@ -26,9 +26,9 @@ class NotesPresenter(val notesRepository: NotesRepository,
 
     override fun loadNotes() {
         // loads notes from repo,so we need reference
-        notesRepository.getNotes(object:NotesDataSource.LoadTasksCallback{
+        notesRepository.getNotes(object:NotesDataSource.LoadNotesCallback{
 
-            override fun onTasksLoaded(notes: List<Note>) {
+            override fun onNotesLoaded(notes: List<Note>) {
                 view.showNotes(notes)
             }
 
@@ -45,9 +45,7 @@ class NotesPresenter(val notesRepository: NotesRepository,
         view.showAddNote()
     }
 
-    override fun editNote(id: Long) {
 
-    }
 
     override fun onResult(requestCode: Int, resultCode: Int) {
         if(requestCode== AddEditNoteActivity.REQUEST_ADD_TASK&&resultCode== Activity.RESULT_OK){

@@ -15,4 +15,7 @@ public interface NotesDao {
     @Update
     fun updateNote(note: Note)
 
+    @Query("SELECT * FROM notes WHERE entryid = :noteId")
+    fun getNoteById(noteId:String):Note
+
 }

@@ -8,6 +8,18 @@ class NotesLocalDataSource(private val dataBase: NotesDataBase,
                            private val appExecutors: AppExecutors) :NotesDataSource{
 
 
+    override fun getNoteById(id: String, noteCallBack: NotesDataSource.GetNoteCallback) {
+        val noteByIdRunnable = Runnable {
+            val note=dataBase.notesDao().getNoteById(id)
+
+            appExecutors.mainThread().execute(Runnable {
+                noteCallBack.onNoteLoaded(note)
+            })
+        }
+        appExecutors.diskIO().execute(noteByIdRunnable)
+    }
+
+
     override fun addNote(note: Note) {
         val saveRunnable = Runnable {
             dataBase.notesDao().insertNote(note)
@@ -15,10 +27,10 @@ class NotesLocalDataSource(private val dataBase: NotesDataBase,
         appExecutors.diskIO().execute(saveRunnable)
     }
 
-    override fun getNotes(noteCallBack: NotesDataSource.LoadTasksCallback) {
+    override fun getNotes(noteCallBack: NotesDataSource.LoadNotesCallback) {
 
         val getRunnable = Runnable {
-            noteCallBack.onTasksLoaded(dataBase.notesDao().getNotes())
+            noteCallBack.onNotesLoaded(dataBase.notesDao().getNotes())
         }
         appExecutors.diskIO().execute(getRunnable)
 

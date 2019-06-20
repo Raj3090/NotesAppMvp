@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.Injection
 import com.example.notesappmvp.R
 import com.example.notesappmvp.data.local.db.entity.Note
+import com.example.notesappmvp.ui.notedetails.NoteDetailsActivity
 import kotlinx.android.synthetic.main.activity_add_edit_note.*
 import kotlinx.android.synthetic.main.content_add_edit_note.*
+import kotlinx.android.synthetic.main.content_detail_note.*
 
 class AddEditNoteActivity : AppCompatActivity(),AddEditNotesContract.View {
 
@@ -19,18 +21,29 @@ class AddEditNoteActivity : AppCompatActivity(),AddEditNotesContract.View {
         setContentView(R.layout.activity_add_edit_note)
         setSupportActionBar(toolbar)
 
+        val noteId = intent.getStringExtra(NoteDetailsActivity.NOTE_ID)
         //use injection
-        presenter= AddEditNotesPresenter(Injection.provideNotesRepository(this),this)
+        presenter= AddEditNotesPresenter(noteId,Injection.provideNotesRepository(this),this)
         fab.setOnClickListener { view ->
             //call mPresenter method ,but before that init
             presenter.addNote(Note(addTaskTitleTv.text.toString(),addTaskDescriptionTv.text.toString()))
         }
+        presenter.start()
     }
 
 
     override fun refreshNoteList() {
         setResult(Activity.RESULT_OK)
         finish()
+    }
+
+
+    override fun showDescription(description: String) {
+        addTaskDescriptionTv.setText(description)
+    }
+
+    override fun showTitle(title: String) {
+        addTaskTitleTv.setText(title)
     }
 
     companion object{

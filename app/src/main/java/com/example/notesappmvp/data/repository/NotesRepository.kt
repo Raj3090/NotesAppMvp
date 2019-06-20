@@ -15,20 +15,20 @@ public class NotesRepository private constructor(notesRemoteDataSource: NotesDat
         mNotesLocalDataSource = checkNotNull(notesLocalDataSource)
     }
 
-    override fun getNotes(noteCallBack: NotesDataSource.LoadTasksCallback) {
+    override fun getNotes(noteCallBack: NotesDataSource.LoadNotesCallback) {
 
         if(mCachedTasks!=null&&!mCacheIsDirty){
-            noteCallBack.onTasksLoaded(ArrayList(mCachedTasks!!.values))
+            noteCallBack.onNotesLoaded(ArrayList(mCachedTasks!!.values))
         }
 
         if(mCacheIsDirty){
             getNoteFromRemoteSource(noteCallBack)
         }else{
 
-            return mNotesLocalDataSource.getNotes(object : NotesDataSource.LoadTasksCallback{
+            return mNotesLocalDataSource.getNotes(object : NotesDataSource.LoadNotesCallback{
 
-                override fun onTasksLoaded(notes: List<Note>) {
-                    noteCallBack.onTasksLoaded(notes)
+                override fun onNotesLoaded(notes: List<Note>) {
+                    noteCallBack.onNotesLoaded(notes)
                 }
 
                 override fun onDataNotAvailable() {
@@ -40,11 +40,11 @@ public class NotesRepository private constructor(notesRemoteDataSource: NotesDat
 
     }
 
-    private fun getNoteFromRemoteSource(noteCallBack: NotesDataSource.LoadTasksCallback) {
-        mNotesRemoteDataSource.getNotes(object :NotesDataSource.LoadTasksCallback {
+    private fun getNoteFromRemoteSource(noteCallBack: NotesDataSource.LoadNotesCallback) {
+        mNotesRemoteDataSource.getNotes(object :NotesDataSource.LoadNotesCallback {
 
-            override fun onTasksLoaded(notes: List<Note>) {
-                noteCallBack.onTasksLoaded(notes)
+            override fun onNotesLoaded(notes: List<Note>) {
+                noteCallBack.onNotesLoaded(notes)
             }
 
             override fun onDataNotAvailable() {
@@ -66,6 +66,20 @@ public class NotesRepository private constructor(notesRemoteDataSource: NotesDat
         mCachedTasks?.put(note.mId,note)
 
     }
+
+    override fun getNoteById(id: String, noteCallBack: NotesDataSource.GetNoteCallback) {
+        mNotesLocalDataSource.getNoteById(id,object :NotesDataSource.GetNoteCallback{
+            override fun onNoteLoaded(note: Note) {
+                noteCallBack.onNoteLoaded(note)
+            }
+
+            override fun onDataNotAvailable() {
+
+            }
+
+        })
+    }
+
 
     internal var mCacheIsDirty = false
 

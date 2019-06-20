@@ -30,7 +30,9 @@
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.notedetails.NoteDetailsActivity"/>
+        <activity android:name=".ui.notedetails.NoteDetailsActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+        />
     </application>
 
 </manifest>

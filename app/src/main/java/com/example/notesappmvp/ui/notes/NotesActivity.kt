@@ -9,6 +9,7 @@ import com.example.Injection
 import com.example.notesappmvp.R
 import com.example.notesappmvp.data.local.db.entity.Note
 import com.example.notesappmvp.ui.addeditnotes.AddEditNoteActivity
+import com.example.notesappmvp.ui.notedetails.NoteDetailsActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class NotesActivity : AppCompatActivity(),NotesContract.View {
@@ -48,8 +49,8 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
     }
 
     override fun showNoteDetailsUi(noteId: String) {
-        val intent=Intent(this,AddEditNoteActivity::class.java)
-        intent.putExtra(AddEditNoteActivity.EDIT_TASK,noteId)
+        val intent=Intent(this,NoteDetailsActivity::class.java)
+        intent.putExtra(NoteDetailsActivity.NOTE_ID,noteId)
         startActivity(intent)
     }
 

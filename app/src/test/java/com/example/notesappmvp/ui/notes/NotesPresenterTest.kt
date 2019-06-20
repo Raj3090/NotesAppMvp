@@ -22,7 +22,7 @@ class NotesPresenterTest {
     private lateinit var mPresenter: NotesPresenter
 
     @Captor
-    private lateinit var mLoadTasksCallbackCaptor: ArgumentCaptor<NotesDataSource.LoadTasksCallback>
+    private lateinit var mLoadTasksCallbackCaptor: ArgumentCaptor<NotesDataSource.LoadNotesCallback>
 
     @Before
     public fun initPresenter(){
@@ -30,7 +30,7 @@ class NotesPresenterTest {
         MockitoAnnotations.initMocks(this)
 
         mPresenter= NotesPresenter(repository,mView)
-        mLoadTasksCallbackCaptor= ArgumentCaptor.forClass(NotesDataSource.LoadTasksCallback::class.java)
+        mLoadTasksCallbackCaptor= ArgumentCaptor.forClass(NotesDataSource.LoadNotesCallback::class.java)
     }
 
     @Test

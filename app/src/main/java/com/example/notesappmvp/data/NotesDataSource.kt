@@ -5,23 +5,25 @@ import com.example.notesappmvp.data.local.db.entity.Note
 interface NotesDataSource {
 
     //load note list call back
-    interface LoadTasksCallback {
+    interface LoadNotesCallback {
 
-        fun onTasksLoaded(notes: List<Note>)
+        fun onNotesLoaded(notes: List<Note>)
 
         fun onDataNotAvailable()
     }
 
     //load single task callback
-    interface GetTaskCallback {
+    interface GetNoteCallback {
 
-        fun onTaskLoaded(note: Note)
+        fun onNoteLoaded(note: Note)
 
         fun onDataNotAvailable()
     }
 
-    fun getNotes(noteCallBack: LoadTasksCallback)
+    fun getNotes(noteCallBack: LoadNotesCallback)
 
     fun addNote(note: Note)
+
+    fun getNoteById(id:String,noteCallBack: GetNoteCallback)
 
 }

@@ -14,7 +14,6 @@ interface NotesContract{
     interface Presenter{
         fun loadNotes()
         fun addNewNote()
-        fun editNote(id: Long)
         fun onResult(requestCode:Int,resultCode:Int)
         fun openNoteDetails(clickedNote: Note)
         fun completeNote(completedNote: Note)
