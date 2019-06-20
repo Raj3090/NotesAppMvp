@@ -1,4 +1,4 @@
-package com.example.notesappmvp.ui.addeditnotes
+package com.example.notesappmvp.ui.notedetails
 
 import android.app.Activity
 import android.os.Bundle
@@ -9,18 +9,18 @@ import com.example.notesappmvp.data.local.db.entity.Note
 import kotlinx.android.synthetic.main.activity_add_edit_note.*
 import kotlinx.android.synthetic.main.content_add_edit_note.*
 
-class AddEditNoteActivity : AppCompatActivity(),AddEditNotesContract.View {
+class NoteDetailsActivity : AppCompatActivity(),NotesDetailsContract.View {
 
 
-    lateinit var presenter: AddEditNotesContract.Presenter
+    lateinit var presenter: NotesDetailsContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_edit_note)
+        setContentView(R.layout.activity_detail_note)
         setSupportActionBar(toolbar)
 
         //use injection
-        presenter= AddEditNotesPresenter(Injection.provideNotesRepository(this),this)
+        presenter= NotesDetailPresenter(Injection.provideNotesRepository(this),this)
         fab.setOnClickListener { view ->
             //call mPresenter method ,but before that init
             presenter.addNote(Note(addTaskTitleTv.text.toString(),addTaskDescriptionTv.text.toString()))
@@ -35,7 +35,7 @@ class AddEditNoteActivity : AppCompatActivity(),AddEditNotesContract.View {
 
     companion object{
         val REQUEST_ADD_TASK = 100
-        val EDIT_TASK = "edit_task"
+        val TASK_DETAILS = "detail_task"
     }
 
 }

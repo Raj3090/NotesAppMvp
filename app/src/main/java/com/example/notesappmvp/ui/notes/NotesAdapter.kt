@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesappmvp.R
 import com.example.notesappmvp.data.local.db.entity.Note
 
 class NotesAdapter(
     private val notes: List<Note>,
-    mItemListener: NoteItemListener
+    val mItemListener: NoteItemListener
 ) : RecyclerView.Adapter<NotesAdapter.ViewHolder>(){
 
 
@@ -34,6 +35,10 @@ class NotesAdapter(
 
         holder.noteTitleTv.setText(note.mTitle)
         holder.noteDescriptionTv.setText(note.mDescription)
+
+        holder.row.setOnClickListener {
+            mItemListener.onNoteClick(note)
+        }
     }
 
 
@@ -42,6 +47,8 @@ class NotesAdapter(
         val noteTitleTv=itemView.findViewById<TextView>(R.id.titleTv)
 
         val noteDescriptionTv=itemView.findViewById<TextView>(R.id.descriptionTv)
+
+        val row=itemView.findViewById<ConstraintLayout>(R.id.row)
     }
 
 

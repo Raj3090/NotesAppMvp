@@ -12,10 +12,11 @@ class NotesPresenter(val notesRepository: NotesRepository,
 
 
     override fun openNoteDetails(clickedNote: Note) {
-
+         view.showNoteDetailsUi(noteId = clickedNote.mId)
     }
 
     override fun completeNote(completedNote: Note) {
+
     }
 
     override fun activateNote(activatedNote: Note) {

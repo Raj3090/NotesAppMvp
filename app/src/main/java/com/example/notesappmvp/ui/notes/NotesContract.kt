@@ -8,6 +8,7 @@ interface NotesContract{
         fun showNotes(notes:List<Note> )
         fun updateNotesList()
         fun showAddNote()
+        fun showNoteDetailsUi(noteId: String)
     }
 
     interface Presenter{
