@@ -13,11 +13,11 @@ import com.example.notesappmvp.data.local.db.entity.Note
 import com.example.notesappmvp.ui.addeditnotes.AddEditNoteActivity
 import com.example.notesappmvp.ui.notedetails.NoteDetailsActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_notes.view.*
 
 
 class NotesActivity : AppCompatActivity(),NotesContract.View {
-
 
 
     //create mPresenter
@@ -96,6 +96,13 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
         mPresenter.onResult(requestCode,resultCode)
     }
 
+    override fun showLoadingTaskError() {
+        showMessage(getString(R.string.loading_tasks_error))
+    }
+
+    private fun showMessage(message: String) {
+        Snackbar.make(findViewById(R.id.parentLayout), message, Snackbar.LENGTH_LONG).show()
+    }
 
     /**
      * Listener for clicks on tasks in the ListView.

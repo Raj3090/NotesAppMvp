@@ -10,6 +10,7 @@ interface NotesContract{
         fun showAddNote()
         fun showLoading(showIndicator: Boolean)
         fun showNoteDetailsUi(noteId: String)
+        fun showLoadingTaskError()
     }
 
     interface Presenter{

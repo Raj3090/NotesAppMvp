@@ -4,4 +4,5 @@
     <string name="title_activity_add_edit_note">AddEditNoteActivity</string>
     <string name="title_hint">Title</string>
     <string name="description_hint">Enter your note here</string>
+    <string name="loading_tasks_error">Error while loading notes</string>
 </resources>

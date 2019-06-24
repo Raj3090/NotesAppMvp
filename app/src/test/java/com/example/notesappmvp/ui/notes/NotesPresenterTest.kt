@@ -9,6 +9,7 @@ import org.junit.Test
 import org.mockito.ArgumentCaptor
 import org.mockito.Captor
 import org.mockito.Mock
+import org.mockito.Mockito.inOrder
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
@@ -27,7 +28,7 @@ class NotesPresenterTest {
     private lateinit var mLoadTasksCallbackCaptor: ArgumentCaptor<NotesDataSource.LoadNotesCallback>
 
     @Before
-    public fun initPresenter(){
+     fun initPresenter(){
 
         MockitoAnnotations.initMocks(this)
 
@@ -42,8 +43,9 @@ class NotesPresenterTest {
     }
 
     @Test
-    public fun verifyNotesLoading(){
+     fun verifyNotesLoading(){
 
+        mPresenter.notesFilterType=NotesFilterType.COMPLETED_TASKS
         mPresenter.start()
 
         verify(repository).getNotes(capture(mLoadTasksCallbackCaptor))
@@ -52,12 +54,46 @@ class NotesPresenterTest {
 
         val showTasksArgumentCaptor = argumentCaptor<List<Note>>()
 
+        // Then progress indicator is shown
+        val inOrder = inOrder(mView)
+        inOrder.verify(mView).showLoading(true)
+        // Then progress indicator is hidden and all tasks are shown in UI
+        inOrder.verify(mView).showLoading(false)
+
         verify(mView).showNotes(capture(showTasksArgumentCaptor))
 
-        assertTrue(showTasksArgumentCaptor.value.size==3)
+        assertTrue(showTasksArgumentCaptor.value.size==2)
 
 
     }
+
+    @Test
+    fun clickOnFab_showAddNoteUI(){
+        mPresenter.addNewNote()
+        verify(mView).showAddNote()
+    }
+
+    @Test
+    fun clickOnTile_showDetailsUI(){
+        val note=Note("mTestNote","my second note")
+        mPresenter.openNoteDetails(note)
+
+        verify(mView).showNoteDetailsUi(note.mId)
+    }
+
+    @Test
+    fun unavailableTasks_ShowsError(){
+        mPresenter.notesFilterType=NotesFilterType.COMPLETED_TASKS
+        mPresenter.start()
+
+        verify(repository).getNotes(capture(mLoadTasksCallbackCaptor))
+
+        mLoadTasksCallbackCaptor.value.onDataNotAvailable()
+
+        verify(mView).showLoadingTaskError()
+
+    }
+
 
     private lateinit var TASKS: List<Note>
 
