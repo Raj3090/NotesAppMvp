@@ -12,7 +12,7 @@ public interface NotesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNote(note: Note)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateNote(note: Note)
 
     @Query("SELECT * FROM notes WHERE entryid = :noteId")

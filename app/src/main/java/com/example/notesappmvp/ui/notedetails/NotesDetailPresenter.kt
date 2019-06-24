@@ -3,7 +3,6 @@ package com.example.notesappmvp.ui.notedetails
 import com.example.notesappmvp.data.NotesDataSource
 import com.example.notesappmvp.data.local.db.entity.Note
 import com.example.notesappmvp.data.repository.NotesRepository
-import org.jetbrains.annotations.NotNull
 
 class NotesDetailPresenter(val noteId:String,
                            val notesRepository: NotesRepository,
@@ -46,5 +45,9 @@ class NotesDetailPresenter(val noteId:String,
 
     }
 
+
+    override fun onResult(requestCode: Int, resultCode: Int) {
+        view.showNotesList(requestCode,resultCode)
+    }
 
 }

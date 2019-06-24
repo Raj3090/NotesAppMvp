@@ -5,7 +5,7 @@ import com.example.notesappmvp.data.local.db.entity.Note
 interface AddEditNotesContract {
 
     interface View {
-       fun refreshNoteList()
+        fun refreshNoteList()
         fun showDescription(description: String)
         fun showTitle(title: String)
     }
@@ -14,6 +14,7 @@ interface AddEditNotesContract {
         fun addNote(note: Note)
         fun editNote()
         fun start()
+        fun onResult(requestCode:Int,resultCode:Int)
     }
 
 }

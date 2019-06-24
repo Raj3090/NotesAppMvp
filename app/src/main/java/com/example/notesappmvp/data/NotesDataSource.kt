@@ -24,6 +24,8 @@ interface NotesDataSource {
 
     fun addNote(note: Note)
 
+    fun updateNote(note:Note)
+
     fun getNoteById(id:String,noteCallBack: GetNoteCallback)
 
 }

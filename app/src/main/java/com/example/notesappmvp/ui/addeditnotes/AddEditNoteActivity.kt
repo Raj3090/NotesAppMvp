@@ -9,26 +9,25 @@ import com.example.notesappmvp.data.local.db.entity.Note
 import com.example.notesappmvp.ui.notedetails.NoteDetailsActivity
 import kotlinx.android.synthetic.main.activity_add_edit_note.*
 import kotlinx.android.synthetic.main.content_add_edit_note.*
-import kotlinx.android.synthetic.main.content_detail_note.*
 
 class AddEditNoteActivity : AppCompatActivity(),AddEditNotesContract.View {
 
 
-    lateinit var presenter: AddEditNotesContract.Presenter
+    lateinit var mPresenter: AddEditNotesContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_edit_note)
         setSupportActionBar(toolbar)
 
-        val noteId = intent.getStringExtra(NoteDetailsActivity.NOTE_ID)
+        val noteId:String? = intent.getStringExtra(NoteDetailsActivity.NOTE_ID)
         //use injection
-        presenter= AddEditNotesPresenter(noteId,Injection.provideNotesRepository(this),this)
+        mPresenter= AddEditNotesPresenter(noteId,Injection.provideNotesRepository(this),this)
         fab.setOnClickListener { view ->
             //call mPresenter method ,but before that init
-            presenter.addNote(Note(addTaskTitleTv.text.toString(),addTaskDescriptionTv.text.toString()))
+            mPresenter.addNote(Note(addTaskTitleTv.text.toString(),addTaskDescriptionTv.text.toString()))
         }
-        presenter.start()
+        mPresenter.start()
     }
 
 

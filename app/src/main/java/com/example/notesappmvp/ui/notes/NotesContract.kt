@@ -8,12 +8,14 @@ interface NotesContract{
         fun showNotes(notes:List<Note> )
         fun updateNotesList()
         fun showAddNote()
+        fun showLoading(showIndicator: Boolean)
         fun showNoteDetailsUi(noteId: String)
     }
 
     interface Presenter{
-        fun loadNotes()
+        fun start()
         fun addNewNote()
+        fun loadNotes(forceUpdate:Boolean)
         fun onResult(requestCode:Int,resultCode:Int)
         fun openNoteDetails(clickedNote: Note)
         fun completeNote(completedNote: Note)

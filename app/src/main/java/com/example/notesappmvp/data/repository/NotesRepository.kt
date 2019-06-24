@@ -7,6 +7,12 @@ public class NotesRepository private constructor(notesRemoteDataSource: NotesDat
                                           notesLocalDataSource: NotesDataSource):NotesDataSource{
 
 
+
+    override fun updateNote(note: Note) {
+        mNotesLocalDataSource.updateNote(note)
+    }
+
+
     private var mNotesLocalDataSource:NotesDataSource
     private  var mNotesRemoteDataSource:NotesDataSource
 

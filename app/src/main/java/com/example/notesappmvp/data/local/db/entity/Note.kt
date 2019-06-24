@@ -12,16 +12,16 @@ data class Note(
     @NonNull
     @PrimaryKey
     @ColumnInfo(name = "entryid")
-    public val mId:String,
+    public var mId:String,
 
     @ColumnInfo(name = "title")
-    public val mTitle: String,
+    public var mTitle: String,
 
     @ColumnInfo(name = "description")
-    public val mDescription: String,
+    public var mDescription: String,
 
     @ColumnInfo(name = "completed")
-    public val mCompleted: Boolean
+    public var mCompleted: Boolean
 
 ) {
 

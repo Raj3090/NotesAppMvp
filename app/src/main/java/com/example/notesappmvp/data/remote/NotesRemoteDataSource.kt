@@ -5,6 +5,10 @@ import com.example.notesappmvp.data.local.db.entity.Note
 
 class NotesRemoteDataSource:NotesDataSource {
 
+    override fun updateNote(note: Note) {
+
+    }
+
     override fun getNoteById(id: String, noteCallBack: NotesDataSource.GetNoteCallback) {
 
     }

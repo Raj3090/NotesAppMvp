@@ -7,6 +7,13 @@ import com.example.notesappmvp.data.local.db.entity.Note
 class NotesLocalDataSource(private val dataBase: NotesDataBase,
                            private val appExecutors: AppExecutors) :NotesDataSource{
 
+    override fun updateNote(note: Note) {
+        val updateRunnable = Runnable {
+            dataBase.notesDao().updateNote(note)
+        }
+        appExecutors.diskIO().execute(updateRunnable)
+    }
+
 
     override fun getNoteById(id: String, noteCallBack: NotesDataSource.GetNoteCallback) {
         val noteByIdRunnable = Runnable {
@@ -30,7 +37,10 @@ class NotesLocalDataSource(private val dataBase: NotesDataBase,
     override fun getNotes(noteCallBack: NotesDataSource.LoadNotesCallback) {
 
         val getRunnable = Runnable {
-            noteCallBack.onNotesLoaded(dataBase.notesDao().getNotes())
+            val notes = dataBase.notesDao().getNotes()
+            appExecutors.mainThread().execute(Runnable {
+                noteCallBack.onNotesLoaded(notes)
+            })
         }
         appExecutors.diskIO().execute(getRunnable)
 

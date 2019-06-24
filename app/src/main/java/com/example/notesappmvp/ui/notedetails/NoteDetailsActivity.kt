@@ -6,14 +6,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.Injection
 import com.example.notesappmvp.R
-import com.example.notesappmvp.data.local.db.entity.Note
 import com.example.notesappmvp.ui.addeditnotes.AddEditNoteActivity
 import kotlinx.android.synthetic.main.activity_add_edit_note.*
-import kotlinx.android.synthetic.main.content_add_edit_note.*
 import kotlinx.android.synthetic.main.content_detail_note.*
 
 class NoteDetailsActivity : AppCompatActivity(),NotesDetailsContract.View {
-
 
 
 
@@ -48,12 +45,23 @@ class NoteDetailsActivity : AppCompatActivity(),NotesDetailsContract.View {
     override fun showEditNoteUi(noteId: String) {
         val intent= Intent(this,AddEditNoteActivity::class.java)
         intent.putExtra(NoteDetailsActivity.NOTE_ID,noteId)
-        startActivity(intent)
+        startActivityForResult(intent,REQUEST_EDIT_TASK)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        presenter.onResult(requestCode,resultCode)
+    }
+
+
+    override fun showNotesList(requestCode: Int, resultCode: Int) {
+        if(requestCode== REQUEST_EDIT_TASK&&resultCode== Activity.RESULT_OK){
+            finish()
+        }
     }
 
 
     companion object{
-        val REQUEST_ADD_TASK = 100
+        val REQUEST_EDIT_TASK = 100
         val NOTE_ID = "detail_note_id"
     }
 

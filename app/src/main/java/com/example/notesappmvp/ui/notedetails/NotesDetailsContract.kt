@@ -1,8 +1,5 @@
 package com.example.notesappmvp.ui.notedetails
 
-import android.accounts.AuthenticatorDescription
-import com.example.notesappmvp.data.local.db.entity.Note
-
 interface NotesDetailsContract {
 
     interface View {
@@ -10,11 +7,13 @@ interface NotesDetailsContract {
         fun showDescription(description: String)
         fun showTitle(title: String)
         fun showEditNoteUi(id: String)
+        fun showNotesList(requestCode: Int, resultCode: Int)
     }
 
     interface Presenter{
         fun editNote()
         fun start()
+        fun onResult(requestCode:Int,resultCode:Int)
     }
 
 }

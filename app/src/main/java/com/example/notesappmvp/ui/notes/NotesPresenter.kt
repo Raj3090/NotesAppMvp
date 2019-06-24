@@ -10,9 +10,10 @@ class NotesPresenter(val notesRepository: NotesRepository,
                      val view: NotesContract.View)
     :NotesContract.Presenter{
 
+    var onFirstLoad=true
 
     override fun openNoteDetails(clickedNote: Note) {
-         view.showNoteDetailsUi(noteId = clickedNote.mId)
+        view.showNoteDetailsUi(noteId = clickedNote.mId)
     }
 
     override fun completeNote(completedNote: Note) {
@@ -24,21 +25,43 @@ class NotesPresenter(val notesRepository: NotesRepository,
     }
 
 
-    override fun loadNotes() {
+    override fun start() {
         // loads notes from repo,so we need reference
+        loadNotes(false)
+    }
+
+    fun loadNotes(forceUpdate:Boolean,showUiLoading:Boolean){
+
+        if(showUiLoading){
+            //show loading indicator
+            view.showLoading(true)
+        }
+
+        if(forceUpdate){
+            //invalidate cache
+        }
+
         notesRepository.getNotes(object:NotesDataSource.LoadNotesCallback{
 
             override fun onNotesLoaded(notes: List<Note>) {
                 view.showNotes(notes)
+                view.showLoading(false)
             }
 
             override fun onDataNotAvailable() {
-
+                view.showLoading(false)
             }
         }
         )
 
+    }
 
+
+    override
+    fun loadNotes(forceUpdate:Boolean){
+
+        loadNotes(forceUpdate||onFirstLoad,true)
+        onFirstLoad=false
     }
 
     override fun addNewNote() {
@@ -49,7 +72,7 @@ class NotesPresenter(val notesRepository: NotesRepository,
 
     override fun onResult(requestCode: Int, resultCode: Int) {
         if(requestCode== AddEditNoteActivity.REQUEST_ADD_TASK&&resultCode== Activity.RESULT_OK){
-            loadNotes()
+            start()
         }
     }
 
