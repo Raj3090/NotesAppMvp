@@ -21,5 +21,9 @@ interface NotesContract{
         fun openNoteDetails(clickedNote: Note)
         fun completeNote(completedNote: Note)
         fun activateNote(activatedNote: Note)
+
+         fun setFiltering(requestType: NotesFilterType)
+
+         fun getFiltering(): NotesFilterType
     }
 }

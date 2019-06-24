@@ -2,6 +2,8 @@ package com.example.notesappmvp.ui.notes
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,8 +29,13 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.notesappmvp.R.layout.activity_notes)
+        setContentView(R.layout.activity_notes)
+        setUpUi()
+        //use injection
+        mPresenter=NotesPresenter(Injection.provideNotesRepository(this),this)
+    }
 
+    private fun setUpUi() {
         // Set up the toolbar.
         val toolbar = findViewById<Toolbar>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
@@ -47,12 +54,6 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
             android.R.color.holo_orange_light,
             android.R.color.holo_red_light);
 
-
-
-        //use injection
-        mPresenter=NotesPresenter(Injection.provideNotesRepository(this),this)
-
-
         findViewById<FloatingActionButton>(com.example.notesappmvp.R.id.fab).setOnClickListener {
             mPresenter.addNewNote()
         }
@@ -66,7 +67,7 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
 
 
     override fun showLoading(showIndicator: Boolean) {
-        swipeContainer.setRefreshing(showIndicator)
+        swipeContainer.isRefreshing = showIndicator
     }
 
     override fun updateNotesList() {
@@ -102,6 +103,42 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
 
     private fun showMessage(message: String) {
         Snackbar.make(findViewById(R.id.parentLayout), message, Snackbar.LENGTH_LONG).show()
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            R.id.clear -> {true}
+            R.id.refresh ->{
+                mPresenter.loadNotes(true)
+                true
+            }
+            R.id.all -> {
+                mPresenter.setFiltering(NotesFilterType.ALL_TASKS)
+                mPresenter.loadNotes(false)
+                true
+            }
+            R.id.active -> {
+                mPresenter.setFiltering(NotesFilterType.ACTIVE_TASKS)
+                mPresenter.loadNotes(false)
+                true
+            }
+            R.id.completed -> {
+                mPresenter.setFiltering(NotesFilterType.COMPLETED_TASKS)
+                mPresenter.loadNotes(false)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     /**

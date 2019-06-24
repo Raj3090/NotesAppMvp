@@ -11,6 +11,7 @@ class NotesPresenter(val notesRepository: NotesRepository,
                      val view: NotesContract.View)
     :NotesContract.Presenter{
 
+
     var onFirstLoad=true
 
     var notesFilterType:NotesFilterType=NotesFilterType.ALL_TASKS
@@ -95,8 +96,16 @@ class NotesPresenter(val notesRepository: NotesRepository,
 
     override fun onResult(requestCode: Int, resultCode: Int) {
         if(requestCode== AddEditNoteActivity.REQUEST_ADD_TASK&&resultCode== Activity.RESULT_OK){
-            start()
+            loadNotes(false)
         }
     }
+
+    override fun setFiltering(requestType: NotesFilterType) {
+        notesFilterType=requestType
+    }
+
+    override fun getFiltering(): NotesFilterType =notesFilterType
+
+
 
 }
