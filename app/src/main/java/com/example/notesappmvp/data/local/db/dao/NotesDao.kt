@@ -18,4 +18,7 @@ public interface NotesDao {
     @Query("SELECT * FROM notes WHERE entryid = :noteId")
     fun getNoteById(noteId:String):Note
 
+    @Query("DELETE FROM notes WHERE completed = :isCompleted")
+    fun removeNotes(isCompleted:Boolean)
+
 }

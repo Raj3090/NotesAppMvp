@@ -28,4 +28,6 @@ interface NotesDataSource {
 
     fun getNoteById(id:String,noteCallBack: GetNoteCallback)
 
+    fun clearCompletedNotes()
+
 }

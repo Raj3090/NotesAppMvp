@@ -7,6 +7,7 @@ import com.example.notesappmvp.data.local.db.entity.Note
 class NotesLocalDataSource(private val dataBase: NotesDataBase,
                            private val appExecutors: AppExecutors) :NotesDataSource{
 
+
     override fun updateNote(note: Note) {
         val updateRunnable = Runnable {
             dataBase.notesDao().updateNote(note)
@@ -44,6 +45,13 @@ class NotesLocalDataSource(private val dataBase: NotesDataBase,
         }
         appExecutors.diskIO().execute(getRunnable)
 
+    }
+
+    override fun clearCompletedNotes() {
+        val clearRunnable = Runnable {
+            dataBase.notesDao().removeNotes(true)
+        }
+        appExecutors.diskIO().execute(clearRunnable)
     }
 
 }

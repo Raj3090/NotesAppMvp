@@ -17,15 +17,23 @@ import com.example.notesappmvp.ui.notedetails.NoteDetailsActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_notes.view.*
+import android.widget.TextView
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 
 
 class NotesActivity : AppCompatActivity(),NotesContract.View {
-
 
     //create mPresenter
     lateinit var mPresenter:NotesContract.Presenter
     lateinit var recyclerView:RecyclerView
     lateinit var swipeContainer:SwipeRefreshLayout
+    lateinit var mNoTaskAddView:TextView
+    lateinit var mNoTaskMainView:TextView
+    lateinit var mNoTaskIcon:ImageView
+    lateinit var mNoTasksView:LinearLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +51,17 @@ class NotesActivity : AppCompatActivity(),NotesContract.View {
 
         recyclerView = findViewById<RecyclerView>(R.id.taskList)
         swipeContainer=findViewById<SwipeRefreshLayout>(R.id.swipeContainer)
+
+        //setup no notes view
+        mNoTasksView =findViewById(R.id.noTasks) as LinearLayout
+        mNoTaskIcon = findViewById(R.id.noTasksIcon) as ImageView
+        mNoTaskMainView = findViewById(R.id.noTasksMain) as TextView
+        mNoTaskAddView = findViewById(R.id.noTasksAdd) as TextView
+
+        mNoTaskAddView.setOnClickListener {
+            mPresenter.addNewNote()
+        }
+
 
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {

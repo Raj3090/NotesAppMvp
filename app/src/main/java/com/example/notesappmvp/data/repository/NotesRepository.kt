@@ -3,7 +3,7 @@ package com.example.notesappmvp.data.repository
 import com.example.notesappmvp.data.NotesDataSource
 import com.example.notesappmvp.data.local.db.entity.Note
 
-public class NotesRepository private constructor(notesRemoteDataSource: NotesDataSource,
+class NotesRepository private constructor(notesRemoteDataSource: NotesDataSource,
                                           notesLocalDataSource: NotesDataSource):NotesDataSource{
 
 
@@ -84,6 +84,11 @@ public class NotesRepository private constructor(notesRemoteDataSource: NotesDat
             }
 
         })
+    }
+
+    override fun clearCompletedNotes() {
+        mNotesRemoteDataSource.clearCompletedNotes()
+        mNotesLocalDataSource.clearCompletedNotes()
     }
 
 

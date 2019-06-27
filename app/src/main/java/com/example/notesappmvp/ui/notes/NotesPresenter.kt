@@ -1,6 +1,7 @@
 package com.example.notesappmvp.ui.notes
 
 import android.app.Activity
+import android.widget.Switch
 import com.example.notesappmvp.data.NotesDataSource
 import com.example.notesappmvp.data.local.db.entity.Note
 import com.example.notesappmvp.data.repository.NotesRepository
@@ -62,8 +63,12 @@ class NotesPresenter(val notesRepository: NotesRepository,
                         else -> notesToShow.add(note)
                     }
                 }
+
+                if(showUiLoading)
+                    view.showLoading(false)
+
                 showNotes(notesToShow)
-                view.showLoading(false)
+
             }
 
             override fun onDataNotAvailable() {
@@ -77,7 +82,50 @@ class NotesPresenter(val notesRepository: NotesRepository,
 
 
     private fun showNotes(notes: List<Note>){
+
+        if(notes.isEmpty()){
+            processEmptyNotes()
+        }else{
+
+        }
+        setNotesLabel()
         view.showNotes(notes)
+    }
+
+    private fun setNotesLabel() {
+        when(notesFilterType){
+
+            NotesFilterType.ACTIVE_TASKS->{
+
+            }
+
+            NotesFilterType.ALL_TASKS->{
+
+            }
+
+            NotesFilterType.COMPLETED_TASKS->{
+
+            }
+
+        }
+    }
+
+    private fun processEmptyNotes() {
+        when(notesFilterType){
+
+            NotesFilterType.ACTIVE_TASKS->{
+
+            }
+
+            NotesFilterType.ALL_TASKS->{
+
+            }
+
+            NotesFilterType.COMPLETED_TASKS->{
+
+            }
+
+        }
     }
 
 

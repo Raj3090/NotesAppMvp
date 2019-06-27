@@ -3,6 +3,7 @@ package com.example.notesappmvp.ui.notes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +40,16 @@ class NotesAdapter(
         holder.row.setOnClickListener {
             mItemListener.onNoteClick(note)
         }
+
+        holder.completeCheckBox.setOnClickListener {
+
+            if(!note.mCompleted){
+                mItemListener.onCompleteNoteClick(note)
+            }else{
+                mItemListener.onActivateNoteClick(note)
+            }
+
+        }
     }
 
 
@@ -47,6 +58,8 @@ class NotesAdapter(
         val noteTitleTv=itemView.findViewById<TextView>(R.id.titleTv)
 
         val noteDescriptionTv=itemView.findViewById<TextView>(R.id.descriptionTv)
+
+        val completeCheckBox=itemView.findViewById<CheckBox>(R.id.checkbox)
 
         val row=itemView.findViewById<ConstraintLayout>(R.id.row)
     }
